@@ -1,3 +1,10 @@
+"""
+This is ATM made on Tkinter
+made by Zubareva Tatyna, 20704
+PIN = 0000
+"""
+
+
 from tkinter import *
 import time
 import itertools
@@ -72,7 +79,10 @@ enter_pin_im = PhotoImage(file = "pin_screen.png")
 money_enter = PhotoImage(file = "money_screen.png")
 take_money_screen = PhotoImage(file = "take_money.png")
 middle_menu_screen = PhotoImage(file = "middle_screen.png")
+pay_nali = PhotoImage(file = "pay_nal.png")
+balance = PhotoImage(file = "balance.png")
 take_card = PhotoImage(file = "take_card.png")
+nal_screen = PhotoImage(file = "nal.png")
 button_image2 = PhotoImage(file = "receipt.png")
 button_image3 = PhotoImage(file = "sq.png")
 button_image4 = PhotoImage(file = "0.png")
@@ -185,6 +195,26 @@ def new_buttons():
     e2.configure(command=clear_num_money)
     e1.configure(command=delete_num_money)
 
+def new_buttons2():
+    '''
+    changing button functions
+    :return:
+    '''
+    n1.configure(command = lambda: press_num_money("1"))
+    n2.configure(command= lambda:press_num_money("2"))
+    n3.configure(command= lambda:press_num_money("3"))
+    n4.configure(command= lambda:press_num_money("4"))
+    n5.configure(command= lambda:press_num_money("5"))
+    n6.configure(command= lambda:press_num_money("6"))
+    n7.configure(command= lambda:press_num_money("7"))
+    n8.configure(command= lambda:press_num_money("8"))
+    n9.configure(command= lambda:press_num_money("9"))
+    n11.configure(command= lambda:press_num_money("0"))
+    e3.configure(command=put_nal)
+    e2.configure(command=clear_num_money)
+    e1.configure(command=delete_num_money)
+
+
 def animation_money():
 
     '''
@@ -207,6 +237,26 @@ def animation_money():
     # time.sleep(0.5)
     middle_menu()
 
+money2 = list(reversed(money))
+def put_nal():
+    '''
+    putting nal
+    :return:
+    '''
+    money_entry.destroy()
+    my_canvas.create_image(260, 150, image=nal_screen)
+    global temp, after_id
+    after_id = tk.after(500, put_nal)
+    if temp + 6 > -1:
+        my_canvas.itemconfigure(money1, image=money2[temp + 6])
+        temp -= 1
+    else:
+        stop_tick()
+        my_canvas.itemconfigure(money1, image=money2[0])
+        temp = 0
+    s3.configure(command=stop_work)
+    s6.configure(command=menu)
+
 
 def middle_menu():
     '''
@@ -225,13 +275,24 @@ def menu():
     :return:
     '''
     start_im = my_canvas.create_image(260, 150, image=start_image)
-    # s2.configure(command=get_balance)
+    s2.configure(command=get_balance)
+    s5.configure(command=pay_nal)
     # s4.configure(command = put_money)
     # s5.configure(command=real_money)
     # s6.configure(command = transaction)
 
 cards2 = list(reversed(cards))
 after_id3 = ''
+
+def get_balance():
+    '''
+
+    :return:
+    '''
+    my_canvas.create_image(260, 150, image=balance)
+    s3.configure(command=stop_work)
+    s6.configure(command=menu)
+
 
 def stop_work():
     '''
@@ -262,6 +323,15 @@ def press_num_money(num):
     money_entry.delete(0, END)
     money_entry.insert(0, sum)
 
+def pay_nal():
+    '''
+    function for paying
+    :return:
+    '''
+    my_canvas.create_image(260, 150, image=pay_nali)
+    new_buttons2()
+    money_entry.tkraise()
+    money_window = my_canvas.create_window(190, 200, anchor='nw', window=money_entry)
 
 def get_money():
     '''
@@ -287,9 +357,9 @@ s2 = Button(tk, image = button_image3, highlightthickness = 0, bd = 0)
 s2.place(x=36, y=128)
 s3 = Button(tk, image = button_image3, highlightthickness = 0, bd = 0, command = stop_work)
 s3.place(x=36, y=198)
-s4 = Button(tk, image = button_image3, highlightthickness = 0, bd = 0)
+s4 = Button(tk, image = button_image3, highlightthickness = 0, bd = 0, command = put_nal)
 s4.place(x=462, y=58)
-s5 = Button(tk, image = button_image3, highlightthickness = 0, bd = 0)
+s5 = Button(tk, image = button_image3, highlightthickness = 0, bd = 0, command = pay_nal)
 s5.place(x=462, y=128)
 s6 = Button(tk, image = button_image3, highlightthickness = 0, bd = 0)
 s6.place(x=462, y=198)
