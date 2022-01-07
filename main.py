@@ -200,16 +200,16 @@ def new_buttons2():
     changing button functions
     :return:
     '''
-    n1.configure(command = lambda: press_num_money("1"))
-    n2.configure(command= lambda:press_num_money("2"))
-    n3.configure(command= lambda:press_num_money("3"))
-    n4.configure(command= lambda:press_num_money("4"))
-    n5.configure(command= lambda:press_num_money("5"))
-    n6.configure(command= lambda:press_num_money("6"))
-    n7.configure(command= lambda:press_num_money("7"))
-    n8.configure(command= lambda:press_num_money("8"))
-    n9.configure(command= lambda:press_num_money("9"))
-    n11.configure(command= lambda:press_num_money("0"))
+    n1.configure(command = lambda: press_num_new("1"))
+    n2.configure(command= lambda:press_num_new("2"))
+    n3.configure(command= lambda:press_num_new("3"))
+    n4.configure(command= lambda:press_num_new("4"))
+    n5.configure(command= lambda:press_num_new("5"))
+    n6.configure(command= lambda:press_num_new("6"))
+    n7.configure(command= lambda:press_num_new("7"))
+    n8.configure(command= lambda:press_num_new("8"))
+    n9.configure(command= lambda:press_num_new("9"))
+    n11.configure(command= lambda:press_num_new("0"))
     e3.configure(command=put_nal)
     e2.configure(command=clear_num_money)
     e1.configure(command=delete_num_money)
@@ -243,7 +243,7 @@ def put_nal():
     putting nal
     :return:
     '''
-    money_entry.destroy()
+    new_entry.destroy()
     my_canvas.create_image(260, 150, image=nal_screen)
     global temp, after_id
     after_id = tk.after(500, put_nal)
@@ -311,7 +311,15 @@ def stop_work():
         temp = 0
         my_canvas.create_image(430, 400, image=cards[0])
 
-
+def press_num_new(num):
+    global sum
+    '''
+    return the value of money
+    :return:
+    '''
+    sum = new_entry.get() + num
+    new_entry.delete(0, END)
+    new_entry.insert(0, sum)
 
 def press_num_money(num):
     global sum
@@ -330,8 +338,8 @@ def pay_nal():
     '''
     my_canvas.create_image(260, 150, image=pay_nali)
     new_buttons2()
-    money_entry.tkraise()
-    money_window = my_canvas.create_window(190, 200, anchor='nw', window=money_entry)
+    new_entry.tkraise()
+    money_window = my_canvas.create_window(190, 200, anchor='nw', window=new_entry)
 
 def get_money():
     '''
@@ -399,6 +407,7 @@ e3.place(x=230, y=580)
 
 pin_entry = Entry(tk, width=10, font=('Nunito Sans', 20), justify = CENTER, highlightthickness = 0, fg = '#DEBEE4', bg ='#1A181F', bd = 0, show = '*')
 money_entry = Entry(tk, width=10, font=('Nunito Sans', 20), justify = CENTER, highlightthickness = 0, fg = '#DEBEE4', bg ='#1A181F', bd = 0)
+new_entry = Entry(tk, width=10, font=('Nunito Sans', 20), justify = CENTER, highlightthickness = 0, fg = '#DEBEE4', bg ='#1A181F', bd = 0)
 
 temp = 0
 after_id = ''
